@@ -18,14 +18,17 @@ export default function Header() {
     href: '#faq'
   }];
   useEffect(() => {
-    // Check for saved theme preference or default to light
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-    setTheme(initialTheme);
-    if (initialTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    }
+    // Use requestAnimationFrame to batch DOM updates and avoid forced reflow
+    requestAnimationFrame(() => {
+      // Check for saved theme preference or default to light
+      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      setTheme(initialTheme);
+      if (initialTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    });
   }, []);
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';

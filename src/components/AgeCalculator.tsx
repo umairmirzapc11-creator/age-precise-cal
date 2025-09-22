@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { Calendar, Clock, Gift, Share2, Download, Copy, Check } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Calendar, Clock, Heart, Star, Gift, User } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { calculateAge, AgeCalculation, formatAgeString } from '@/utils/ageCalculations';
+import { calculateAge, AgeCalculation } from '@/utils/ageCalculations';
 import { useToast } from '@/hooks/use-toast';
-import AgeResults from './AgeResults';
-import CountdownTimer from './CountdownTimer';
 
 export default function AgeCalculator() {
   const [birthDate, setBirthDate] = useState('');
-  const [ageInYears, setAgeInYears] = useState<number | null>(null);
+  const [ageData, setAgeData] = useState<AgeCalculation | null>(null);
   const { toast } = useToast();
 
   const handleCalculate = () => {
@@ -36,18 +33,14 @@ export default function AgeCalculator() {
       return;
     }
 
-    let years = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      years--;
+    const calculatedAge = calculateAge(birth);
+    if (calculatedAge) {
+      setAgeData(calculatedAge);
+      toast({
+        title: "Age calculated successfully! 🎉",
+        description: `You are ${calculatedAge.years} years old`,
+      });
     }
-
-    setAgeInYears(years);
-    toast({
-      title: "Age calculated successfully! 🎉",
-      description: `You are ${years} years old`,
-    });
   };
 
   return (
@@ -78,11 +71,86 @@ export default function AgeCalculator() {
             Calculate Age
           </button>
 
-          {ageInYears !== null && (
-            <div className="text-center p-6 bg-gradient-subtle rounded-lg">
-              <p className="text-2xl font-bold text-primary">
-                Your Age: {ageInYears} years
-              </p>
+          {ageData && (
+            <div className="space-y-6 mt-8">
+              {/* Main Age Display */}
+              <div className="text-center p-6 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg">
+                <p className="text-3xl font-bold text-primary mb-2">
+                  {ageData.years} years, {ageData.months} months, {ageData.days} days
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  {ageData.hours.toLocaleString()} hours, {ageData.minutes.toLocaleString()} minutes, {ageData.seconds.toLocaleString()} seconds
+                </p>
+              </div>
+
+              {/* Statistics Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Heartbeats */}
+                <Card className="p-4 bg-card/50">
+                  <div className="flex items-center space-x-3">
+                    <Heart className="w-8 h-8 text-red-500" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Estimated Heartbeats</p>
+                      <p className="text-xl font-bold">{ageData.totalHeartbeats?.toLocaleString() || 'N/A'}</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Birth Day */}
+                <Card className="p-4 bg-card/50">
+                  <div className="flex items-center space-x-3">
+                    <Calendar className="w-8 h-8 text-blue-500" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Born on</p>
+                      <p className="text-xl font-bold">{ageData.birthDayOfWeek}</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Zodiac Sign */}
+                <Card className="p-4 bg-card/50">
+                  <div className="flex items-center space-x-3">
+                    <Star className="w-8 h-8 text-yellow-500" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Zodiac Sign</p>
+                      <p className="text-xl font-bold">{ageData.zodiacSign}</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Next Birthday */}
+                <Card className="p-4 bg-card/50">
+                  <div className="flex items-center space-x-3">
+                    <Gift className="w-8 h-8 text-green-500" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Next Birthday</p>
+                      <p className="text-xl font-bold">{ageData.daysUntilBirthday} days</p>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              {/* Additional Stats */}
+              <Card className="p-4 bg-card/50">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <p className="text-2xl font-bold text-primary">{ageData.totalDays?.toLocaleString()}</p>
+                    <p className="text-sm text-muted-foreground">Total Days</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-primary">{ageData.totalMonths?.toLocaleString()}</p>
+                    <p className="text-sm text-muted-foreground">Total Months</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-primary">{ageData.totalWeeks?.toLocaleString()}</p>
+                    <p className="text-sm text-muted-foreground">Total Weeks</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-primary">{ageData.totalHours?.toLocaleString()}</p>
+                    <p className="text-sm text-muted-foreground">Total Hours</p>
+                  </div>
+                </div>
+              </Card>
             </div>
           )}
         </div>

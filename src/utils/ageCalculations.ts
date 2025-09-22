@@ -26,6 +26,7 @@ export interface AgeCalculation {
   totalMonths: number;
   totalHours: number;
   totalMinutes: number;
+  totalHeartbeats?: number;
   nextBirthday: Date;
   daysUntilBirthday: number;
   hoursUntilBirthday: number;
@@ -92,6 +93,9 @@ export function calculateAge(birthDate: Date | string): AgeCalculation | null {
   const totalMonths = differenceInMonths(now, birth);
   const totalHours = differenceInHours(now, birth);
   const totalMinutes = differenceInMinutes(now, birth);
+  
+  // Calculate estimated heartbeats (average 70 beats per minute)
+  const totalHeartbeats = totalMinutes * 70;
 
   // Next birthday calculation
   let nextBirthday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
@@ -130,6 +134,7 @@ export function calculateAge(birthDate: Date | string): AgeCalculation | null {
     totalMonths,
     totalHours,
     totalMinutes,
+    totalHeartbeats,
     nextBirthday,
     daysUntilBirthday,
     hoursUntilBirthday,

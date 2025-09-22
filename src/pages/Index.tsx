@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import AgeCalculator from '@/components/AgeCalculator';
 import SEO from '@/components/SEO';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Lazy load components that aren't immediately visible
 const AgeDifferenceCalculator = lazy(() => import('@/components/AgeDifferenceCalculator'));
@@ -27,12 +28,12 @@ const Index = () => {
           </section>
           <section id="difference" className="py-16 md:py-24 bg-gradient-subtle">
             <div className="container mx-auto px-4">
-              <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <AgeDifferenceCalculator />
               </Suspense>
             </div>
           </section>
-          <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
             <Features />
             <HowItWorks />
             <FAQ />

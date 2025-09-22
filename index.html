@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
     <!-- Critical inline styles to prevent FOUC -->
     <style>
       /* Critical CSS for initial render */
@@ -27,26 +30,66 @@
       * {
         box-sizing: border-box;
       }
+      /* Loading state for lazy components */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0,0,0,0.1);
+        border-radius: 50%;
+        border-top-color: #333;
+        animation: spin 1s ease-in-out infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
     </style>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Age Calculator — Calculate Age in Years, Months &amp; Days Instantly| AgeCalculator Pro">
     <meta name="description" content="Instantly calculate your exact age in years, months, days, hours and minutes. Next birthday countdown, timezone support, printable certificate. Try the free online age calculator now.">
     <meta name="keywords" content="age calculator, calculate age, how old am I, age calculator in years months days, age calculator with time zone, age difference calculator, next birthday countdown">
     <meta name="author" content="AgeCalc Pro" />
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="1sh-LYFi7gOMMW7PEdlBqzBzHc2t0ROBknmFJMSbHPA" />
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://agecalc.pro/" />
     <meta property="og:title" content="Age Calculator — Calculate Age in Years, Months & Days | AgeCalc Pro" />
     <meta property="og:description" content="Instantly calculate your exact age in years, months, days, hours and minutes. Free online age calculator with timezone support." />
-    <meta property="og:type" content="website" />
     <meta property="og:image" content="https://agecalc.pro/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="AgeCalc Pro" />
+    <meta property="og:locale" content="en_US" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://agecalc.pro/" />
     <meta name="twitter:title" content="Age Calculator — Calculate Your Exact Age Instantly" />
     <meta name="twitter:description" content="Calculate your age in years, months, days, hours and minutes. Free online age calculator." />
     <meta name="twitter:image" content="https://agecalc.pro/og-image.jpg" />
+    <meta name="twitter:site" content="@agecalcpro" />
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   </head>
 
   <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px;">
+        <h1>JavaScript Required</h1>
+        <p>Please enable JavaScript to use the Age Calculator.</p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -35,7 +35,7 @@ export default function Hero() {
               onClick={scrollToCalculator}
               size="lg"
               variant="hero"
-              className="text-lg px-8"
+              className="text-base sm:text-lg px-6 sm:px-8 py-6 sm:py-3 min-h-[48px]"
             >
               Calculate Age Now
               <ArrowDown className="w-5 h-5 ml-2 animate-bounce" />
@@ -43,7 +43,7 @@ export default function Hero() {
             <Button 
               size="lg"
               variant="outline"
-              className="text-lg px-8"
+              className="text-base sm:text-lg px-6 sm:px-8 py-6 sm:py-3 min-h-[48px]"
               onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
             >
               How It Works

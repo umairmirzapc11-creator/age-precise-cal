@@ -19,14 +19,17 @@ export default function CountdownTimer({ nextBirthday }: CountdownTimerProps) {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const now = new Date();
-      const days = differenceInDays(nextBirthday, now);
-      const hours = differenceInHours(nextBirthday, now) % 24;
-      const minutes = differenceInMinutes(nextBirthday, now) % 60;
-      const seconds = differenceInSeconds(nextBirthday, now) % 60;
-      const totalDays = differenceInDays(nextBirthday, now);
+      // Use requestAnimationFrame to avoid forced reflows during updates
+      requestAnimationFrame(() => {
+        const now = new Date();
+        const days = differenceInDays(nextBirthday, now);
+        const hours = differenceInHours(nextBirthday, now) % 24;
+        const minutes = differenceInMinutes(nextBirthday, now) % 60;
+        const seconds = differenceInSeconds(nextBirthday, now) % 60;
+        const totalDays = differenceInDays(nextBirthday, now);
 
-      setTimeLeft({ days, hours, minutes, seconds, totalDays });
+        setTimeLeft({ days, hours, minutes, seconds, totalDays });
+      });
     };
 
     calculateTimeLeft();

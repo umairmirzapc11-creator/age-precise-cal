@@ -19,12 +19,15 @@ export default function AgeCalculator() {
 
   // Check for shared URL on mount
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const sharedDate = params.get('date');
-    if (sharedDate) {
-      setBirthDate(sharedDate);
-      handleCalculate(sharedDate);
-    }
+    // Defer URL parameter checking to avoid blocking initial render
+    requestAnimationFrame(() => {
+      const params = new URLSearchParams(window.location.search);
+      const sharedDate = params.get('date');
+      if (sharedDate) {
+        setBirthDate(sharedDate);
+        handleCalculate(sharedDate);
+      }
+    });
   }, []);
 
   const handleCalculate = (dateValue?: string) => {

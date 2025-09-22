@@ -31,15 +31,13 @@ export default function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button 
+            <button
               onClick={scrollToCalculator}
-              size="lg"
-              variant="hero"
-              className="text-base sm:text-lg px-6 sm:px-8 py-6 sm:py-3 min-h-[48px]"
+              className="w-full sm:w-auto max-w-[300px] mx-auto sm:mx-0 px-[25px] py-[12px] text-[18px] rounded-[8px] bg-[#4CAF50] text-white font-medium transition-colors hover:bg-[#45a049] focus:outline-none focus:ring-2 focus:ring-[#4CAF50] focus:ring-offset-2"
             >
               Calculate Age Now
-              <ArrowDown className="w-5 h-5 ml-2 animate-bounce" />
-            </Button>
+              <ArrowDown className="w-5 h-5 ml-2 inline animate-bounce" />
+            </button>
             <Button 
               size="lg"
               variant="outline"

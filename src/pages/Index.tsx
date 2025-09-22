@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import AgeCalculator from '@/components/AgeCalculator';
-import AgeDifferenceCalculator from '@/components/AgeDifferenceCalculator';
-import Features from '@/components/Features';
-import HowItWorks from '@/components/HowItWorks';
-import FAQ from '@/components/FAQ';
-import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
+
+// Lazy load components that aren't immediately visible
+const AgeDifferenceCalculator = lazy(() => import('@/components/AgeDifferenceCalculator'));
+const Features = lazy(() => import('@/components/Features'));
+const HowItWorks = lazy(() => import('@/components/HowItWorks'));
+const FAQ = lazy(() => import('@/components/FAQ'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 const Index = () => {
   return (
@@ -25,14 +27,20 @@ const Index = () => {
           </section>
           <section id="difference" className="py-16 md:py-24 bg-gradient-subtle">
             <div className="container mx-auto px-4">
-              <AgeDifferenceCalculator />
+              <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
+                <AgeDifferenceCalculator />
+              </Suspense>
             </div>
           </section>
-          <Features />
-          <HowItWorks />
-          <FAQ />
+          <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
+            <Features />
+            <HowItWorks />
+            <FAQ />
+          </Suspense>
         </main>
-        <Footer />
+        <Suspense fallback={<div className="h-32 bg-background" />}>
+          <Footer />
+        </Suspense>
       </div>
     </HelmetProvider>
   );
